@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+typedef struct aluno{ //nome do rotulo
+    char nome [30];
+    float media;
+    int falta;
+} Aluno; //
+//nome de classe é cm letra MAIUSCULA
+
+void preencher (Aluno* vet){
+    int i;
+    for(i = 0; i < 3;i++){
+        printf("Aluno %d\n", i+1);
+        printf("Digite o nome: ");
+        scanf("%s",vet[i].nome);
+        printf("Digite a média: ");
+        scanf("%f", &vet[i].media);
+        printf("Faltas: ");
+        scanf("%d", &vet[i].falta);
+    }
+}
+
+void exibir(Aluno* vet){
+    int i;
+    for (i = 0; i < 3;i++){
+        printf("Dados do aluno %d: \n",i+1);
+        printf("Nome: %s \n", vet[i].nome);
+        printf("Média: %f \n", vet[i].media);
+        printf("Falta: %d \n", vet[i].falta);
+    }
+}
+
+int main(){
+    Aluno turma[3];
+    printf("Preenchendo os dados da turma: \n");
+    preencher(turma);
+    exibir(turma);
+    return 0;
+}
