@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <string.h>
+#define tam 40
+
+typedef struct cadastro{
+    char codigo[10];
+    char descricao[100];
+    float preco;
+    int qtd
+}Produto;
+
+void menu(){
+    printf("Selecione uma opção: \n");
+    printf("1 - Cadastrar produto\n");
+    printf("2 - Alterar valor unitário de um produto\n");
+    printf("3 - Vender um produto\n");
+    printf("4 - Atualizar estoque\n");
+    printf("5 - Exibir todos os produtos cadastrados\n");
+    printf("6 - Exibir produtos com estoque zero\n");
+    printf("0 - Encerrar o programa\n");
+}
+
+int busca(Produto* vet, int qtd, char* codigo){
+    int i;
+    if(qtd == 0){
+        return -1;
+    }
+    else{
+        for(i = 0; i < qtd; i++){
+            if(strcmp(vet[i].codigo, codigo)==0){
+                return i;
+        }
+        return -1;
+    }
+}
+
+void cadastro(Produto* vet, int* qtd, char codigo[]){
+    int retorno;
+    char c;
+    if(*qtd == tam){   
+        printf("Vetor cheio! Inserção não realizada \n");
+    }
+    else if(*qtd == 0){
+         strcpy(vet[0].codigo, codigo);
+         printf("Informe a descrição do produto: ");
+         fgets(vet[0].descricao, 100, stdin);
+         printf("Informe o preço do produto: ");
+         scanf("%f", &vet[0].preco);
+         printf("Informe a quantidade do produto: ");
+         scanf("%d", &vet[0].qtd);
+         *qtd = *qtd + 1;
+        printf("Produto cadastrado com sucesso! \n");
+    }
+    else {
+        retorno = busca(vet, *qtd, c);
+        if(retorno != -1){
+            printf("Produto existene! \n");
+        }
+        else{
+            strcpy(vet[*qtd].codigo, codigo);
+            printf("Informe a descrição do produto: ");
+            fgets(vet[*qtd].descricao, 100, stdin);
+            printf("Informe o preço do produto: ");
+            scanf("%f", &vet[*qtd].preco);
+            printf("Informe a quantidade do produto: ");
+            scanf("%d", &vet[*qtd].qtd);
+            *qtd = *qtd + 1;
+            printf("Produto cadastrado com sucesso! \n");
+        }
+    }
+}
+
+void exibir(Produto* vet, int n){
+    int i;
+    for(i = 0; i < n; i++){
+        printf("Produto %d \n", i+1);
+        printf("Código: %s \n", vet[i].codigo);
+        printf("Descrição: %s \n", vet[i].descricao);
+    }
+}
+int main(){
+    Produto cadastro[40];
+    int total = 0, op;
+    char codigo[10];
+    do{
+        menu();
+        scanf("%d", &op);
+        switch (op){
+            case 1: 
+                printf("Informe o código do produto a ser cadastrado: ");
+                fgets(codigo,10,stdin);
+                cadastrar(cadastro, total)
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                exibir(cadastro, total);
+                break;
+            case 6:
+                printf("Programa encerrado! \n");
+                break;
+        }
+    }
+}
