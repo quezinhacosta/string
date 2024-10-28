@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+FILE* prepararArq(char* nome){
+    FILE* aux;
+
+    aux = fopen(nome, "r+t");
+    if( aux == NULL){
+        aux = fopen(nome, "w+t");
+    }
+    return aux;
+}
+
+int main(){
+    FILE* arq;
+    char nomeArq[50], nome[100];
+    int status;
+
+    printf("Informe o nome do arquivo: ");
+    fgets(nomeArq, 50, stdin);
+    nomeArq[strcspn(nomeArq, "\n")] = '\0';
+    arq = prepararArq(nomeArq);
+    if (arq == NULL){
+        printf("Erro ao tentar criar o arquivo %s \n", nomeArq);
+    }
+    else{//arquivo criado
+        fseek(arq,0,2);
+        printf("Digite o primeiro nome: ");
+        fgets(nome, 100, stdin);
+        while(nome[0] != '\n'){
+            fputs(nome, arq);
+            printf("Digite outro nome para encerrar: ");
+            fgets(nome, 100, stdin);
+        }
+        status = fclose(arq);
+        if (status == 0){
+            printf("Arquivo fechado. \n");
+        }
+        else{
+            printf("O arquivo ainda não foi fechado. \n");
+        }
+    }
+    return 0;
+}
